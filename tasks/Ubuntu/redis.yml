@@ -16,7 +16,16 @@
       state: "{{ redis_pkg_state }}"
       update_cache: true
 
-  - name: Deploy Redis systemd service manifest
-    copy:
-      src: redis_systemd.service
-      dest: /etc/systemd/system/redis.service
+  - name: Ensure Redis binds to accessible IP
+    lineinfile:
+      dest: /etc/redis/redis.conf
+      regexp: '^bind'
+      line: 'bind 0.0.0.0'
+    notify: restart redis service
+
+#  - name: Deploy Redis systemd service manifest
+#    copy:
+#      src: redis_systemd.service
+#      dest: /etc/systemd/system/redis.service
+
+  - meta: flush_handlers
