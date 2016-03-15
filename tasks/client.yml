@@ -1,6 +1,6 @@
 ---
 # tasks/client.yml: Deploy various client-side configurations for Sensu
-  
+
   - include_vars: "{{ ansible_distribution }}.yml"
 
   - name: Ensure the Sensu config directory is present
@@ -10,6 +10,7 @@
       recurse: true
       owner: "{{ sensu_user_name }}"
       group: "{{ sensu_group_name }}"
+    when: sensu_pkg_state == "present"
 
   - name: Deploy Sensu client RabbitMQ configuration
     template:
@@ -18,6 +19,7 @@
       group: "{{ sensu_group_name }}"
       src: rabbitmq.json.j2
     notify: restart sensu-client service
+    when: sensu_pkg_state == "present"
 
   - name: Deploy Sensu client service configuration
     template:
@@ -26,9 +28,11 @@
       group: "{{ sensu_group_name }}"
       src: "{{ sensu_client_config  }}"
     notify: restart sensu-client service
+    when: sensu_pkg_state == "present"
 
   - include: SmartOS/client.yml
     when: ansible_distribution == "SmartOS"
 
   - name: Ensure Sensu client service is running
     service: name=sensu-client state=started enabled=yes
+    when: sensu_pkg_state == "present"
