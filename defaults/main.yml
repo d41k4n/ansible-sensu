@@ -42,6 +42,7 @@ sensu_group_name: sensu
 sensu_include_plugins: true
 sensu_include_dashboard: false
 sensu_master: false
+sensu_client: true
 sensu_user_name: sensu
 sensu_remote_plugins: ~
 
