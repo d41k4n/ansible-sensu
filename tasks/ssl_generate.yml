@@ -38,7 +38,7 @@
         chdir: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool"
         creates: "{{ sensu_config_path }}/ssl_generation/sensu_ssl_tool/server"
 
-    when: sensu_master|bool
+    when: sensu_master
     become: true
     become_user: "{{ sensu_user_name }}"
 
