@@ -66,3 +66,7 @@ uchiwa_pkg_download_sha256sum: ~
 uchiwa_pkg_download_path: ~
 uchiwa_pkg_version: ~
 uchiwa_pkg_download_url: ~
+
+# Graphite properties
+graphite_host: "{{ groups['graphite'][0] }}"
+graphite_port: 2003
